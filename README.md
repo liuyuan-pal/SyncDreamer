@@ -1,7 +1,7 @@
 # SyncDreamer
 SyncDreamer: Generating Multiview-consistent Images from a Single-view Image
 
-![](assets/teaser.png)
+![](assets/teaser.jpg)
 
 
 ## [Project page](https://liuyuan-pal.github.io/SyncDreamer/) | [Paper](https://arxiv.org/abs/)
