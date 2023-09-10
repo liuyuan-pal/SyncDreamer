@@ -4,7 +4,7 @@ SyncDreamer: Generating Multiview-consistent Images from a Single-view Image
 ![](assets/teaser.jpg)
 
 
-## [Project page](https://liuyuan-pal.github.io/SyncDreamer/) | [Paper](https://arxiv.org/abs/)
+## [Project page](https://liuyuan-pal.github.io/SyncDreamer/) | [Paper](https://arxiv.org/abs/2309.03453)
 
 ### Preparation for inference
 1. Install packages in `requirements.txt`. We test our model on a 40G A100 GPU with 11.1 CUDA and 1.10.2 pytorch.
