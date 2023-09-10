@@ -1,0 +1,45 @@
+model:
+  base_learning_rate: 5.0e-05
+  target: ldm.models.diffusion.sync_dreamer.SyncMultiviewDiffusion
+  params:
+    view_num: 16
+    image_size: 256
+    cfg_scale: 2.0
+    output_num: 8
+    batch_view_num: 4
+    finetune_unet: false
+    finetune_projection: false
+    drop_conditions: false
+    clip_image_encoder_path: ckpt/ViT-L-14.pt
+
+    scheduler_config: # 10000 warmup steps
+      target: ldm.lr_scheduler.LambdaLinearScheduler
+      params:
+        warm_up_steps: [ 100 ]
+        cycle_lengths: [ 100000 ]
+        f_start: [ 0.02 ]
+        f_max: [ 1.0 ]
+        f_min: [ 1.0 ]
+
+    unet_config:
+      target: ldm.models.diffusion.sync_dreamer_attention.DepthWiseAttention
+      params:
+        volume_dims: [64, 128, 256, 512]
+        image_size: 32
+        in_channels: 8
+        out_channels: 4
+        model_channels: 320
+        attention_resolutions: [ 4, 2, 1 ]
+        num_res_blocks: 2
+        channel_mult: [ 1, 2, 4, 4 ]
+        num_heads: 8
+        use_spatial_transformer: True
+        transformer_depth: 1
+        context_dim: 768
+        use_checkpoint: True
+        legacy: False
+
+data: {}
+
+lightning:
+  trainer: {}

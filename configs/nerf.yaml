@@ -1,0 +1,25 @@
+model:
+  base_lr: 1.0e-2
+  target: renderer.renderer.RendererTrainer
+  params:
+    total_steps: 2000
+    warm_up_steps: 100
+    train_batch_num: 40960
+    test_batch_num: 40960
+    renderer: ngp
+    cube_bound: 0.6
+    use_mask: true
+    lambda_rgb_loss: 0.5
+    lambda_mask_loss: 10.0
+
+data:
+  target: renderer.dummy_dataset.DummyDataset
+  params: {}
+
+callbacks:
+  save_interval: 5000
+
+trainer:
+  val_check_interval: 500
+  max_steps: 2000
+
