@@ -1,7 +1,10 @@
+torch
 pytorch_lightning==1.9.0
+Pillow==10.0.0
 opencv-python
+transformers
+taming-transformers-rom1504 
 tqdm
-PIL
 numpy
 kornia
 webdataset
@@ -11,7 +14,9 @@ scikit-image
 pymcubes
 carvekit-colab
 open3d
+trimesh
 easydict
 nerfacc
+imageio-ffmpeg==0.4.7
 git+https://github.com/NVlabs/tiny-cuda-nn/#subdirectory=bindings/torch
 git+https://github.com/openai/CLIP.git
