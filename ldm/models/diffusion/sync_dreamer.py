@@ -422,7 +422,7 @@ class SyncMultiviewDiffusion(pl.LightningModule):
         return clip_embed_, frustum_volume_feats, x_concat
 
     def training_step(self, batch):
-        B = batch['image'].shape[0]
+        B = batch['target_image'].shape[0]
         time_steps = torch.randint(0, self.num_timesteps, (B,), device=self.device).long()
 
         x, clip_embed, input_info = self.prepare(batch)
@@ -494,19 +494,14 @@ class SyncMultiviewDiffusion(pl.LightningModule):
         else:
             return x_sample
 
-    def log_image(self,  x_sample, batch, step, output_dir, only_first_row=False):
+    def log_image(self,  x_sample, batch, step, output_dir):
         process = lambda x: ((torch.clip(x, min=-1, max=1).cpu().numpy() * 0.5 + 0.5) * 255).astype(np.uint8)
         B = x_sample.shape[0]
         N = x_sample.shape[1]
         image_cond = []
         for bi in range(B):
-            img_pr_ = concat_images_list(process(batch['ref_image'][bi]),*[process(x_sample[bi, ni].permute(1, 2, 0)) for ni in range(N)])
-            img_gt_ = concat_images_list(process(batch['ref_image'][bi]),*[process(batch['image'][bi, ni]) for ni in range(N)])
-            if not only_first_row or bi==0:
-                image_cond.append(concat_images_list(img_gt_, img_pr_, vert=True))
-            else:
-                image_cond.append(img_pr_)
-
+            img_pr_ = concat_images_list(process(batch['input_image'][bi]),*[process(x_sample[bi, ni].permute(1, 2, 0)) for ni in range(N)])
+            image_cond.append(img_pr_)
 
         output_dir = Path(output_dir)
         imsave(str(output_dir/f'{step}.jpg'), concat_images_list(*image_cond, vert=True))

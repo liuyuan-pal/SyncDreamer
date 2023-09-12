@@ -273,3 +273,30 @@ class AdamWwithEMAandWings(optim.Optimizer):
                 ema_param.mul_(cur_ema_decay).add_(param.float(), alpha=1 - cur_ema_decay)
 
         return loss
+
+def prepare_inputs(image_path, elevation_input, crop_size=-1, image_size=256):
+    image_input = Image.open(image_path)
+
+    if crop_size!=-1:
+        alpha_np = np.asarray(image_input)[:, :, 3]
+        coords = np.stack(np.nonzero(alpha_np), 1)[:, (1, 0)]
+        min_x, min_y = np.min(coords, 0)
+        max_x, max_y = np.max(coords, 0)
+        ref_img_ = image_input.crop((min_x, min_y, max_x, max_y))
+        h, w = ref_img_.height, ref_img_.width
+        scale = crop_size / max(h, w)
+        h_, w_ = int(scale * h), int(scale * w)
+        ref_img_ = ref_img_.resize((w_, h_), resample=Image.BICUBIC)
+        image_input = add_margin(ref_img_, size=image_size)
+    else:
+        image_input = add_margin(image_input, size=max(image_input.height, image_input.width))
+        image_input = image_input.resize((image_size, image_size), resample=Image.BICUBIC)
+
+    image_input = np.asarray(image_input)
+    image_input = image_input.astype(np.float32) / 255.0
+    ref_mask = image_input[:, :, 3:]
+    image_input[:, :, :3] = image_input[:, :, :3] * ref_mask + 1 - ref_mask  # white background
+    image_input = image_input[:, :, :3] * 2.0 - 1.0
+    image_input = torch.from_numpy(image_input.astype(np.float32))
+    elevation_input = torch.from_numpy(np.asarray([np.deg2rad(elevation_input)], np.float32))
+    return {"input_image": image_input, "input_elevation": elevation_input}

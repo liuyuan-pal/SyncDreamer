@@ -7,7 +7,12 @@ SyncDreamer: Generating Multiview-consistent Images from a Single-view Image
 ## [Project page](https://liuyuan-pal.github.io/SyncDreamer/) | [Paper](https://arxiv.org/abs/2309.03453)
 
 - [x] Inference codes and pretrained models.
-- [ ] Training codes.
+- [x] Training codes.
+- [ ] Training data.
+
+### News
+- 2023-09-12: Training codes are released. We are still uploading the training data (about 1.6T) to onedrive, which would cost some time.
+- 2023-09-09: Inference codes and pretrained models are released.
 
 ### Preparation for inference
 1. Install packages in `requirements.txt`. We test our model on a 40G A100 GPU with 11.1 CUDA and 1.10.2 pytorch.
@@ -16,7 +21,7 @@ conda create -n syncdreamer
 conda activate syncdreamer
 pip install -r requirements.txt
 ```
-2. Download checkpoints at [here](https://connecthkuhk-my.sharepoint.com/:f:/g/personal/yuanly_connect_hku_hk/EjYHbCBnV-VPjBqNHdNulIABq9sYAEpSz4NPLDI72a85vw?e=8jGGhg).
+2. Download checkpoints [here](https://connecthkuhk-my.sharepoint.com/:f:/g/personal/yuanly_connect_hku_hk/EjYHbCBnV-VPjBqNHdNulIABq9sYAEpSz4NPLDI72a85vw?e=8jGGhg).
 
 ### Inference
 1. Make sure you have the following models.
@@ -75,6 +80,53 @@ Explanation:
 - Before training, we will run `carvekit` to find the foreground mask in `_init_dataset()` in `renderer/renderer.py`. The resulted masked images locate at `output/renderer/aircraft-nerf/masked-*.png`. Sometimes, `carvekit` may produce incorrect masks.
 - A rendering video will be saved at `output/renderer/aircraft-neus/rendering.mp4` or `output/renderer/aircraft-nerf/rendering.mp4`.
 - We will only save a mesh for NeuS but not for NeRF, which is `output/renderer/aircraft-neus/mesh.ply`.
+
+### Preparation for training
+
+1. Generate renderings for training. We provide several objaverse 3D models as examples [here](https://connecthkuhk-my.sharepoint.com/:u:/g/personal/yuanly_connect_hku_hk/EQjz-dQRY4VLvIm8JTvQzi8BU9zu-R-tBCCH0P1tPU8RFw?e=Dl77Cz). To download the whole objaverse dataset, please refer to [Objaverse](https://objaverse.allenai.org/).
+```bash
+# generate renderings for fixed target views
+blender --background --python blender_script.py -- \
+  --object_path objaverse_examples/6f99fb8c2f1a4252b986ed5a765e1db9/6f99fb8c2f1a4252b986ed5a765e1db9.glb \
+  --output_dir ./training_examples/target --camera_type fixed
+  
+# generate renderings for random input views
+blender --background --python blender_script.py -- \
+  --object_path objaverse_examples/6f99fb8c2f1a4252b986ed5a765e1db9/6f99fb8c2f1a4252b986ed5a765e1db9.glb \
+  --output_dir ./training_examples/input --camera_type random
+```
+2. Organize the renderings like the following. We provide rendering examples [here](https://connecthkuhk-my.sharepoint.com/:u:/g/personal/yuanly_connect_hku_hk/EZEq7wDSR85IriRhO3bkW8wBNE9UtqH3lQ86dyAFdZqCRg?e=dAiXdh).
+```bash
+SyncDreamer
+|-- training_examples
+    |-- target
+        |-- <renderings-of-uid-0>
+        |-- <renderings-of-uid-1>
+        |-- ...
+    |-- input
+        |-- <renderings-of-uid-0>
+        |-- <renderings-of-uid-1>
+        |-- ...
+    |-- uid_set.pkl # this is a .pkl file containing a list of uids
+```
+3. Download pretrained zero123-xl model [here](https://zero123.cs.columbia.edu/assets/zero123-xl.ckpt).
+
+
+### Training
+```bash
+python train_syncdreamer.py -b configs/syncdreamer-train.yaml \
+                           --finetune_from <path-to-your-zero123-xl-model> \
+                           -l <logging-directory>  \
+                           -c <checkpoint-directory> \
+                           --gpus 0,1,2,3,4,5,6,7
+```
+Note in `configs/syncdreamer-train.yaml`, we specify the following directories which contain the training data and the validation data.  
+```
+target_dir: training_examples/target
+input_dir: training_examples/input
+uid_set_pkl: training_examples/uid_set.pkl
+validation_dir: validation_set
+```
 
 ## Acknowledgement
 
