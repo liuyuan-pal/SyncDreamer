@@ -11,6 +11,11 @@ SyncDreamer: Generating Multiview-consistent Images from a Single-view Image
 
 ### Preparation for inference
 1. Install packages in `requirements.txt`. We test our model on a 40G A100 GPU with 11.1 CUDA and 1.10.2 pytorch.
+```angular2html
+conda create -n syncdreamer
+conda activate syncdreamer
+pip install -r requirements.txt
+```
 2. Download checkpoints at [here](https://connecthkuhk-my.sharepoint.com/:f:/g/personal/yuanly_connect_hku_hk/EjYHbCBnV-VPjBqNHdNulIABq9sYAEpSz4NPLDI72a85vw?e=8jGGhg).
 
 ### Inference
@@ -21,7 +26,7 @@ SyncDreamer
     |-- ViT-L-14.ckpt
     |-- syncdreamer-pretrain.ckpt
 ```
-2. (Optional) Predict foreground mask as the alpha channel. I use [Paint3D](https://apps.microsoft.com/store/detail/paint-3d/9NBLGGH5FV99) to segment the foreground object interactively. 
+2. (Optional) Predict foreground mask as the alpha channel. We use [Paint3D](https://apps.microsoft.com/store/detail/paint-3d/9NBLGGH5FV99) to segment the foreground object interactively. 
 We also provide a script `foreground_segment.py` using `carvekit` to predict foreground masks and you need to first crop the object region before feeding it to `foreground_segment.py`. We may double check the predicted masks are correct or not.
 ```bash
 python foreground_segment.py --input <image-file-to-input> --output <image-file-in-png-format-to-output>
@@ -37,18 +42,18 @@ python generate.py --ckpt ckpt/syncdreamer-pretrain.ckpt \
                    --crop_size 200
 ```
 Explanation: 
-- `--ckpt` is the checkpoint we want to load
+- `--ckpt` is the checkpoint to load.
 - `--input` is the input image in the RGBA form. The alpha value means the foreground object mask.
 - `--output` is the output directory. Results would be saved to `output/aircraft/0.png` which contains 16 images of predefined viewpoints per `png` file. 
 - `--sample_num` is the number of instances we will generate. `--sample_num 4` means we sample 4 instances from `output/aircraft/0.png` to `output/aircraft/3.png`.
 - `--cfg_scale` is the *classifier-free-guidance*. `2.0` is OK for most cases. We may also try `1.5`.
 - `--elevation` is the elevation angle of the input image in degree. As shown in the following figure,
-- ![elevation](assets/elevation.jpg)
-- We assume the object is locating at the origin and the input image is captured by a camera of the elevation. Note we don't need a very accurate elevation angle but a rough value in [-10,40] degree is OK, e.g. {0,10,20,30}.
+![elevation](assets/elevation.jpg)
+- We assume the object is locating at the origin and the input image is captured by a camera with an elevation angle. Note we don't need a very accurate elevation angle but a rough value in [-10,40] degree is OK, e.g. {0,10,20,30}.
 - `--crop_size` affects how we resize the object on the input image. The input image will be resize to 256\*256 and the object region is resized to `crop_size` as follows. `crop_size=-1` means we do not resize the object but only directly resize the input image to 256*256. 
 `crop_size=200` works in most cases. We may also try `180` or `150`.
 - ![crop_size](assets/crop_size.jpg)
-- **Suggestion**: We may try different `crop_size` and `elevation` to get a best result. SyncDreamer does not always produce good results but we may generate multiple times with different `--seed` and select the most reasonable one.
+- **Suggestion**: We may try different `crop_size` and `elevation` to get the best result. SyncDreamer does not always produce good results but we may generate multiple times with different `--seed` and select the most reasonable one.
 - **Limited GPU memory**: For users with limited GPU memory, we may try `--sample_num 1` and `--batch_view_num 4`, which samples 1 instance and denoise 4 images on every step. This costs less than 10G GPU memory but is much slower in generation.
 - [testset_parameters.sh](testset_parameters.sh) contains the command I used to generate results.
 4. Run a NeuS or a NeRF for 3D reconstruction.
@@ -87,7 +92,7 @@ We have intensively borrow codes from the following repositories. Many thanks to
 ## Citation
 If you find this repository useful in your project, please cite the following work. :)
 ```
-@article{liu2022gen6d,
+@article{liu2023syncdreamer,
   title={SyncDreamer: Learning to Generate Multiview-consistent Images from a Single-view Image},
   author={Liu, Yuan and Lin, Cheng and Zeng, Zijiao and Long, Xiaoxiao and Liu, Lingjie and Komura, Taku and Wang, Wenping},
   journal={arXiv preprint arXiv:2309.03453},
