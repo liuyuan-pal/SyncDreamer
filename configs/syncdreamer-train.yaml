@@ -42,22 +42,22 @@ model:
 data:
   target: ldm.data.sync_dreamer.SyncDreamerDataset
   params:
-    target_dir: training_examples/target
-    input_dir: training_examples/input
-    uid_set_pkl: training_examples/uid_set.pkl
-    validation_dir: validation_set
-    batch_size: 24
+    target_dir: training_examples/target # renderings of target views
+    input_dir: training_examples/input # renderings of input views
+    uid_set_pkl: training_examples/uid_set.pkl # a list of uids
+    validation_dir: validation_set # directory of validation data
+    batch_size: 24 # batch size for a single gpu
     num_workers: 8
 
 lightning:
   modelcheckpoint:
     params:
-      every_n_train_steps: 1000
+      every_n_train_steps: 1000 # we will save models every 1k steps
   callbacks:
     {}
 
   trainer:
     benchmark: True
-    val_check_interval: 1
+    val_check_interval: 1000 # we will run validation every 1k steps, the validation will output images to <log_dir>/<images>/val
     num_sanity_val_steps: 0
     check_val_every_n_epoch: null

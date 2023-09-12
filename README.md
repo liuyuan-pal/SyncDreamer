@@ -83,7 +83,7 @@ Explanation:
 
 ### Preparation for training
 
-1. Generate renderings for training. We provide several objaverse 3D models as examples [here](https://connecthkuhk-my.sharepoint.com/:u:/g/personal/yuanly_connect_hku_hk/EQjz-dQRY4VLvIm8JTvQzi8BU9zu-R-tBCCH0P1tPU8RFw?e=Dl77Cz). To download the whole objaverse dataset, please refer to [Objaverse](https://objaverse.allenai.org/).
+1. Generate renderings for training. We provide several objaverse 3D models as examples [here](https://connecthkuhk-my.sharepoint.com/:u:/g/personal/yuanly_connect_hku_hk/EQjz-dQRY4VLvIm8JTvQzi8BU9zu-R-tBCCH0P1tPU8RFw?e=Dl77Cz). The whole objaverse dataset can be downloaded at [Objaverse](https://objaverse.allenai.org/).
 ```bash
 # generate renderings for fixed target views
 blender --background --python blender_script.py -- \
@@ -109,7 +109,7 @@ SyncDreamer
         |-- ...
     |-- uid_set.pkl # this is a .pkl file containing a list of uids
 ```
-3. Download pretrained zero123-xl model [here](https://zero123.cs.columbia.edu/assets/zero123-xl.ckpt).
+3. Download the pretrained zero123-xl model [here](https://zero123.cs.columbia.edu/assets/zero123-xl.ckpt).
 
 
 ### Training
@@ -127,6 +127,7 @@ input_dir: training_examples/input
 uid_set_pkl: training_examples/uid_set.pkl
 validation_dir: validation_set
 ```
+During training, we will run validation to output images to `<log_dir>/<images>/val` every 1k steps.
 
 ## Acknowledgement
 
