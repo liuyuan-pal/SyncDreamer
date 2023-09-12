@@ -15,7 +15,7 @@ SyncDreamer: Generating Multiview-consistent Images from a Single-view Image
 - 2023-09-09: Inference codes and pretrained models are released.
 
 ### Preparation for inference
-1. Install packages in `requirements.txt`. We test our model on a 40G A100 GPU with 11.1 CUDA and 1.10.2 pytorch.
+1. Install packages in `requirements.txt`. We test our model on a 40G A100 GPU with 11.1 CUDA and 1.10.2 pytorch. But inference on GPUs with smaller memory (=10G) is possible.
 ```angular2html
 conda create -n syncdreamer
 conda activate syncdreamer
