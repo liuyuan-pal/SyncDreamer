@@ -49,6 +49,7 @@ Explanation:
 `crop_size=200` works in most cases. We may also try `180` or `150`.
 - ![crop_size](assets/crop_size.jpg)
 - **Suggestion**: We may try different `crop_size` and `elevation` to get a best result. SyncDreamer does not always produce good results but we may generate multiple times with different `--seed` and select the most reasonable one.
+- **Limited GPU memory**: For users with limited GPU memory, we may try `--sample_num 1` and `--batch_view_num 4`, which samples 1 instance and denoise 4 images on every step. This costs less than 10G GPU memory but is much slower in generation.
 - [testset_parameters.sh](testset_parameters.sh) contains the command I used to generate results.
 4. Run a NeuS or a NeRF for 3D reconstruction.
 ```bash
