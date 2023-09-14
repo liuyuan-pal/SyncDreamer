@@ -6,7 +6,7 @@ import torch
 from omegaconf import OmegaConf
 from skimage.io import imsave
 
-from ldm.models.diffusion.sync_dreamer import SyncMultiviewDiffusion
+from ldm.models.diffusion.sync_dreamer import SyncMultiviewDiffusion, SyncDDIMSampler
 from ldm.util import instantiate_from_config, prepare_inputs
 
 
@@ -32,6 +32,9 @@ def main():
     parser.add_argument('--cfg_scale', type=float, default=2.0)
     parser.add_argument('--batch_view_num', type=int, default=8)
     parser.add_argument('--seed', type=int, default=6033)
+
+    parser.add_argument('--sampler', type=str, default='ddim')
+    parser.add_argument('--sample_steps', type=int, default=50)
     flags = parser.parse_args()
 
     torch.random.manual_seed(flags.seed)
@@ -46,7 +49,12 @@ def main():
     for k, v in data.items():
         data[k] = v.unsqueeze(0).cuda()
         data[k] = torch.repeat_interleave(data[k], flags.sample_num, dim=0)
-    x_sample = model.sample(data, flags.cfg_scale, flags.batch_view_num)
+
+    if flags.sampler=='ddim':
+        sampler = SyncDDIMSampler(model, flags.sample_steps)
+    else:
+        raise NotImplementedError
+    x_sample = model.sample(sampler, data, flags.cfg_scale, flags.batch_view_num)
 
     B, N, _, H, W = x_sample.shape
     x_sample = (torch.clamp(x_sample,max=1.0,min=-1.0) + 1) * 0.5

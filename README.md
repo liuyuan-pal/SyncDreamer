@@ -11,6 +11,7 @@ SyncDreamer: Generating Multiview-consistent Images from a Single-view Image
 - [ ] Training data.
 
 ### News
+- 2023-09-13: We can run SyncDreamer for only 50 steps using `--sample_steps 50` for `generate.py`, which costs about 30s to generate 4 instances (64 images). 
 - 2023-09-12: Training codes are released. We are still uploading the training data (about 1.6T) to onedrive, which would cost some time.
 - 2023-09-09: Inference codes and pretrained models are released.
 
