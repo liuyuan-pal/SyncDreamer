@@ -107,7 +107,7 @@ SyncDreamer
         |-- <renderings-of-uid-0>
         |-- <renderings-of-uid-1>
         |-- ...
-    |-- uid_set.pkl # this is a .pkl file containing a list of uids
+    |-- uid_set.pkl # this is a .pkl file containing a list of uids. Refer to `render_batch.py` for how I generate these files.
 ```
 3. Download the pretrained zero123-xl model [here](https://zero123.cs.columbia.edu/assets/zero123-xl.ckpt).
 
