@@ -4,7 +4,7 @@ SyncDreamer: Generating Multiview-consistent Images from a Single-view Image
 ![](assets/teaser.jpg)
 
 
-## [Project page](https://liuyuan-pal.github.io/SyncDreamer/) | [Paper](https://arxiv.org/abs/2309.03453)
+## [Project page](https://liuyuan-pal.github.io/SyncDreamer/) | [Paper](https://arxiv.org/abs/2309.03453) | [Live Demo](https://huggingface.co/spaces/liuyuan-pal/SyncDreamer)
 
 - [x] Inference codes and pretrained models.
 - [x] Training codes.
