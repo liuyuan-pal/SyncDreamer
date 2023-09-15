@@ -83,7 +83,7 @@ Explanation:
 
 ### Preparation for training
 
-1. Generate renderings for training. We provide several objaverse 3D models as examples [here](https://connecthkuhk-my.sharepoint.com/:u:/g/personal/yuanly_connect_hku_hk/EQjz-dQRY4VLvIm8JTvQzi8BU9zu-R-tBCCH0P1tPU8RFw?e=Dl77Cz). The whole objaverse dataset can be downloaded at [Objaverse](https://objaverse.allenai.org/).
+1. Generate renderings for training. We provide several objaverse 3D models as examples [here](https://connecthkuhk-my.sharepoint.com/:u:/g/personal/yuanly_connect_hku_hk/EQjz-dQRY4VLvIm8JTvQzi8BL58gatT6ewLJa54iVhsOZg?e=6TF0Vs). The whole objaverse dataset can be downloaded at [Objaverse](https://objaverse.allenai.org/).
 ```bash
 # generate renderings for fixed target views
 blender --background --python blender_script.py -- \
@@ -95,7 +95,7 @@ blender --background --python blender_script.py -- \
   --object_path objaverse_examples/6f99fb8c2f1a4252b986ed5a765e1db9/6f99fb8c2f1a4252b986ed5a765e1db9.glb \
   --output_dir ./training_examples/input --camera_type random
 ```
-2. Organize the renderings like the following. We provide rendering examples [here](https://connecthkuhk-my.sharepoint.com/:u:/g/personal/yuanly_connect_hku_hk/EZEq7wDSR85IriRhO3bkW8wBNE9UtqH3lQ86dyAFdZqCRg?e=dAiXdh).
+2. Organize the renderings like the following. We provide rendering examples [here](https://connecthkuhk-my.sharepoint.com/:u:/g/personal/yuanly_connect_hku_hk/EZEq7wDSR85IriRhO3bkW8wBNE9UtqH3lQ86dyAFdZqCRg?e=aRYDr9).
 ```bash
 SyncDreamer
 |-- training_examples
