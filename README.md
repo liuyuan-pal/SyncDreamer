@@ -21,7 +21,7 @@ conda create -n syncdreamer
 conda activate syncdreamer
 pip install -r requirements.txt
 ```
-2. Download checkpoints [here](https://connecthkuhk-my.sharepoint.com/:f:/g/personal/yuanly_connect_hku_hk/EjYHbCBnV-VPjBqNHdNulIABq9sYAEpSz4NPLDI72a85vw?e=8jGGhg).
+2. Download checkpoints [here](https://connecthkuhk-my.sharepoint.com/:f:/g/personal/yuanly_connect_hku_hk/EjYHbCBnV-VPjBqNHdNulIABq9sYAEpSz4NPLDI72a85vw).
 
 ### Inference
 1. Make sure you have the following models.
