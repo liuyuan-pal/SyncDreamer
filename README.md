@@ -141,7 +141,7 @@ We have intensively borrow codes from the following repositories. Many thanks to
 - [NeuS](https://github.com/Totoro97/NeuS)
 - [Magic123](https://github.com/guochengqian/Magic123)
 - [RealFusion](https://github.com/lukemelas/realfusion)
-
+- [One-2-3-45](https://github.com/One-2-3-45/One-2-3-45)
 
 ## Citation
 If you find this repository useful in your project, please cite the following work. :)
