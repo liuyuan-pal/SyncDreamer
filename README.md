@@ -8,7 +8,8 @@ SyncDreamer: Generating Multiview-consistent Images from a Single-view Image
 
 - [x] Inference codes and pretrained models.
 - [x] Training codes.
-- [ ] Training data.
+- [x] Training data.
+- [ ] New pretrained model without elevation as input
 
 ### News
 - 2023-09-12: Training codes are released. We are still uploading the training data (about 1.6T) to onedrive, which would cost some time.
@@ -111,6 +112,7 @@ SyncDreamer
     |-- uid_set.pkl # this is a .pkl file containing a list of uids. Refer to `render_batch.py` for how I generate these files.
 ```
 3. Download the pretrained zero123-xl model [here](https://zero123.cs.columbia.edu/assets/zero123-xl.ckpt).
+4. The whole training set for SyncDreamer is [here](https://connecthkuhk-my.sharepoint.com/:f:/g/personal/yuanly_connect_hku_hk/EqrCp4rcFOFBuCatr88bkL0Bl3qKIEU1gSPS7TQ2KGb7Yg?e=eSESKA).
 
 
 ### Training
