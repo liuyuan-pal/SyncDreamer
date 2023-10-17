@@ -121,14 +121,6 @@ def output_points(fn,pts,colors=None):
                 f.write(f'{int(colors[pi,0])} {int(colors[pi,1])} {int(colors[pi,2])}')
             f.write('\n')
 
-DEPTH_MAX, DEPTH_MIN = 2.4, 0.6
-DEPTH_VALID_MAX, DEPTH_VALID_MIN = 2.37, 0.63
-def read_depth_objaverse(depth_fn):
-    depth = imread(depth_fn)
-    depth = depth.astype(np.float32) / 65535 * (DEPTH_MAX-DEPTH_MIN) + DEPTH_MIN
-    mask = (depth > DEPTH_VALID_MIN) & (depth < DEPTH_VALID_MAX)
-    return depth, mask
-
 
 def mask_depth_to_pts(mask,depth,K,rgb=None):
     hs,ws=np.nonzero(mask)

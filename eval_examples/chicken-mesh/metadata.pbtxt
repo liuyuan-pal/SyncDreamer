@@ -1,0 +1,35 @@
+model {
+  file: "model.sdf"
+}
+name: "CHICKEN_NESTING"
+description: "CHICKEN NESTING\nThis basic nesting toy comes with a chicken theme. It consists of 4 pieces and a circle base. Children are able to learn about the sequencing, life cycle of a chicken and play in various styles."
+version: 1
+authors {
+  name: "Google"
+  email: "scanned-objects@google.com"
+}
+legal {
+  copyright: "Copyright 2020 Google LLC."
+  license: "Creative Commons Attribution 4.0 International"
+}
+annotations {
+  key: "brand"
+  value: "PlanToys"
+}
+annotations {
+  key: "mpn"
+  value: "5695"
+}
+annotations {
+  key: "sku"
+  value: "05695P00"
+}
+compatibilities {
+  name: "Gazebo"
+  version {
+    major: 11
+  }
+}
+categories {
+  first: "Toys"
+}

@@ -6,9 +6,10 @@ SyncDreamer: Generating Multiview-consistent Images from a Single-view Image
 
 ## [Project page](https://liuyuan-pal.github.io/SyncDreamer/) | [Paper](https://arxiv.org/abs/2309.03453) | [Live Demo](https://huggingface.co/spaces/liuyuan-pal/SyncDreamer)
 
-- [x] Inference codes and pretrained models.
-- [x] Training codes.
+- [x] Inference code and pretrained models.
+- [x] Training code.
 - [x] Training data.
+- [x] Evaluation code.
 - [ ] New pretrained model without elevation as input
 
 ### News
@@ -86,6 +87,7 @@ Explanation:
 ### Preparation for training
 
 1. Generate renderings for training. We provide several objaverse 3D models as examples [here](https://connecthkuhk-my.sharepoint.com/:u:/g/personal/yuanly_connect_hku_hk/EQjz-dQRY4VLvIm8JTvQzi8BL58gatT6ewLJa54iVhsOZg?e=6TF0Vs). The whole objaverse dataset can be downloaded at [Objaverse](https://objaverse.allenai.org/).
+To unzip the `random` dataset, we need to `cat z01 zip > zip` and then unzip the output file according to the description [here](https://www.bandisoft.com/bandizip.mac/howto/merge-split-zip/)
 ```bash
 # generate renderings for fixed target views
 blender --background --python blender_script.py -- \
@@ -131,6 +133,23 @@ uid_set_pkl: training_examples/uid_set.pkl
 validation_dir: validation_set
 ```
 During training, we will run validation to output images to `<log_dir>/<images>/val` every 1k steps.
+
+### Evaluation
+GT meshes and renderings for the GSO dataset can be found at [here](https://connecthkuhk-my.sharepoint.com/:u:/g/personal/yuanly_connect_hku_hk/ESvAmPTCxdlBqouwaBZxvyEB13NH1iJEMvcjtlJIGjiTWQ?e=Oll2Hj).
+1. Evaluate COLMAP reconstruction:
+```shell
+python eval_colmap.py --dir eval_examples/chicken-pr --project eval_examples/chicken-project --name chicken --colmap <path-to-your-colmap>
+```
+Note the 16 views are relatively very sparse for COLMAP so it sometimes fails to reconstruct.
+2. Evaluate novel view synthesis, `pip install lpips` and
+```shell
+python eval_nvs.py --gt eval_examples/chicken-gt --pr eval_examples/chicken-pr 
+```
+3. Evaluate the mesh quality: install `pip install mesh2sdf` and install `nvdiffrast` [here](https://github.com/NVlabs/nvdiffrast). Then, 
+```shell
+python eval_mesh.py --pr_mesh eval_examples/chicken-pr.ply --pr_name syncdreamer --gt_dir eval_examples/chicken-gt --gt_mesh eval_examples/chicken-mesh/meshes/model.obj --gt_name chicken
+```
+Note we manually rotate the example when rendering. The rotations are listed in `get_gt_rotate_angle` in [eval_mesh.py](eval_mesh.py).
 
 ## Acknowledgement
 
