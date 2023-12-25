@@ -168,7 +168,7 @@ We have intensively borrow codes from the following repositories. Many thanks to
 If you find this repository useful in your project, please cite the following work. :)
 ```
 @article{liu2023syncdreamer,
-  title={SyncDreamer: Learning to Generate Multiview-consistent Images from a Single-view Image},
+  title={SyncDreamer: Generating Multiview-consistent Images from a Single-view Image},
   author={Liu, Yuan and Lin, Cheng and Zeng, Zijiao and Long, Xiaoxiao and Liu, Lingjie and Komura, Taku and Wang, Wenping},
   journal={arXiv preprint arXiv:2309.03453},
   year={2023}
