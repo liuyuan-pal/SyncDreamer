@@ -294,8 +294,10 @@ def prepare_inputs(image_path, elevation_input, crop_size=-1, image_size=256):
 
     image_input = np.asarray(image_input)
     image_input = image_input.astype(np.float32) / 255.0
-    ref_mask = image_input[:, :, 3:]
-    image_input[:, :, :3] = image_input[:, :, :3] * ref_mask + 1 - ref_mask  # white background
+    if image_input.shape[-1]==4:
+        ref_mask = image_input[:, :, 3:]
+        image_input[:, :, :3] = image_input[:, :, :3] * ref_mask + 1 - ref_mask  # white background
+
     image_input = image_input[:, :, :3] * 2.0 - 1.0
     image_input = torch.from_numpy(image_input.astype(np.float32))
     elevation_input = torch.from_numpy(np.asarray([np.deg2rad(elevation_input)], np.float32))
