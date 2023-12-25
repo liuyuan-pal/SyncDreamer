@@ -135,7 +135,7 @@ validation_dir: validation_set
 During training, we will run validation to output images to `<log_dir>/<images>/val` every 1k steps.
 
 ### Evaluation
-GT meshes and renderings for the GSO dataset can be found at [here](https://connecthkuhk-my.sharepoint.com/:u:/g/personal/yuanly_connect_hku_hk/ESvAmPTCxdlBqouwaBZxvyEB13NH1iJEMvcjtlJIGjiTWQ?e=Oll2Hj).
+GT meshes and renderings for the GSO dataset can be found at [here](https://connecthkuhk-my.sharepoint.com/:f:/g/personal/yuanly_connect_hku_hk/EjYHbCBnV-VPjBqNHdNulIABq9sYAEpSz4NPLDI72a85vw).
 1. Evaluate COLMAP reconstruction:
 ```shell
 python eval_colmap.py --dir eval_examples/chicken-pr --project eval_examples/chicken-project --name chicken --colmap <path-to-your-colmap>
