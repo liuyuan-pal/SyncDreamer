@@ -23,7 +23,7 @@ conda create -n syncdreamer
 conda activate syncdreamer
 pip install -r requirements.txt
 ```
-2. Download checkpoints [here](https://connecthkuhk-my.sharepoint.com/:f:/g/personal/yuanly_connect_hku_hk/EjYHbCBnV-VPjBqNHdNulIABq9sYAEpSz4NPLDI72a85vw).
+2. Download checkpoints [here](https://drive.google.com/file/d/1ypyD5WXxAnsWjnHgAfOAGolV0Zd9kpam/view?usp=sharing)
 3. A docker env can be found at [https://hub.docker.com/repository/docker/liuyuanpal/syncdreamer-env/general](https://hub.docker.com/repository/docker/liuyuanpal/syncdreamer-env/general).
 
 ### Inference
